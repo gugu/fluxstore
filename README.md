@@ -14,7 +14,7 @@ const FluxStore = require('fluxstore')
 
 class SampleStore extends FluxStore {
   getEvents() {
-    return ['create', 'createError', 'addTag'];
+    return ['create', 'change', 'createError', 'addTag'];
   }
   create(data) {
     // ...
