@@ -3,7 +3,7 @@ Store class for facebook flux, generates event methods automatically, more simpl
 
 Generates for you these methods:
 
-addYourEventListener, removeYourEventListener, emitYourEvent
+    addYourEventListener, removeYourEventListener, emitYourEvent
 
 With this module you can write store this way::
 
