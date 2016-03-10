@@ -7,10 +7,11 @@ addYourEventListener, removeYourEventListener, emitYourEvent
 
 With this module you can write store this way::
 
+```javascript
     var AppDispatcher = require('../dispatcher/app_dispatcher');
-    var SampleConstants = require('../constants/link_constants');
+    var SampleConstants = require('../constants/sample_constants');
     var assign = require('object-assign');
-    const FluxStore = require('../lib/fluxstore/store')
+    const FluxStore = require('fluxstore')
 
     class SampleStore extends FluxStore {
       getEvents() {
@@ -39,22 +40,22 @@ With this module you can write store this way::
       }
 
       connections(connect) {
-        connect(SampleConstants.LINK_CREATE, (action) => {
+        connect(SampleConstants.SAMPLE_CREATE, (action) => {
           create(action.data);
           this.emitChange();
           this.emitCreate();
         });
-        connect(SampleConstants.LINK_CREATE_ERROR, this.emitCreateError);
-        connect(SampleConstants.LINK_DESTROY, this.destroy);
-        connect(SampleConstants.LINK_ARCHIVE, this.archive);
-        connect(SampleConstants.LINK_UPDATE_PATH, this.updatePath);
-        connect(SampleConstants.LINK_SET_ORDERING, this.setOrdering);
-        connect(SampleConstants.LINK_ADD_TAG, ({link, tag}) => {
+        connect(SampleConstants.SAMPLE_CREATE_ERROR, this.emitCreateError);
+        connect(SampleConstants.SAMPLE_DESTROY, this.destroy);
+        connect(SampleConstants.SAMPLE_ARCHIVE, this.archive);
+        connect(SampleConstants.SAMPLE_UPDATE_PATH, this.updatePath);
+        connect(SampleConstants.SAMPLE_SET_ORDERING, this.setOrdering);
+        connect(SampleConstants.SAMPLE_ADD_TAG, ({link, tag}) => {
           addTag(link.id, tag);
           this.emitChange();
           this.emitAddTag();
         });
-        connect(SampleConstants.LINK_TAG_FILTER, this.tagFilter);
+        connect(SampleConstants.SAMPLE_TAG_FILTER, this.tagFilter);
         connect(SampleConstants.MOBILE_UPDATE_SUCCESS, (action) => {
           update(action.data, action.data);
           this.emitMobileUpdate();
@@ -66,3 +67,4 @@ With this module you can write store this way::
     let store = new SampleStore(AppDispatcher);
 
     module.exports = store;
+```
