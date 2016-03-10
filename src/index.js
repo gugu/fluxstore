@@ -12,7 +12,7 @@ class Store extends EventEmitter {
         this.on(ev, cb);
       }
       this['remove' + capitalize(ev) + 'Listener'] = function(cb) {
-        this.on(ev, cb);
+        this.removeEventListener(ev, cb);
       }
       this['emit' + capitalize(ev)] = function (arg) {
         this.emit(ev, arg);
