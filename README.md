@@ -8,58 +8,45 @@ Generates for you these methods:
 With this module you can write store this way::
 
 ```javascript
-var AppDispatcher = require('../dispatcher/app_dispatcher');
-var SampleConstants = require('../constants/sample_constants');
-var assign = require('object-assign');
+const AppDispatcher = require('../dispatcher/app_dispatcher');
+const SampleConstants = require('../constants/sample_constants');
 const FluxStore = require('fluxstore')
 
 class SampleStore extends FluxStore {
   getEvents() {
-    return ['create', 'createError', 'change', 'remove', 'archive', 'changePath', 'mobileUpdate',
-            'mobileUpdateError', 'addTag'];
+    return ['create', 'createError', 'addTag'];
   }
+  create(data) {
+    // ...
+  }
+
+  addTag(linkId, tag) {
+    // ...
+  }
+
+
+
   getAll() {
     // ...
   }
 
-  setOrdering({ordering}) {
-    // ...
-  }
-  updatePath({link, path}) {
-    // ...
-  }
-
-  archive({link}) {
-    // ...
-  }
-  tagFilter(tag) {
-    // ...
-  }
   destroy(link) {
     // ...
   }
 
   connections(connect) {
     connect(SampleConstants.SAMPLE_CREATE, (action) => {
-      create(action.data);
+      this.create(action.data);
       this.emitChange();
       this.emitCreate();
     });
     connect(SampleConstants.SAMPLE_CREATE_ERROR, this.emitCreateError);
     connect(SampleConstants.SAMPLE_DESTROY, this.destroy);
-    connect(SampleConstants.SAMPLE_ARCHIVE, this.archive);
-    connect(SampleConstants.SAMPLE_UPDATE_PATH, this.updatePath);
-    connect(SampleConstants.SAMPLE_SET_ORDERING, this.setOrdering);
     connect(SampleConstants.SAMPLE_ADD_TAG, ({link, tag}) => {
-      addTag(link.id, tag);
+      this.addTag(link.id, tag);
       this.emitChange();
       this.emitAddTag();
     });
-    connect(SampleConstants.SAMPLE_TAG_FILTER, this.tagFilter);
-    connect(SampleConstants.MOBILE_UPDATE_SUCCESS, (action) => {
-      update(action.data, action.data);
-      this.emitMobileUpdate();
-    })
   }
 
 };
@@ -67,4 +54,25 @@ class SampleStore extends FluxStore {
 let store = new SampleStore(AppDispatcher);
 
 module.exports = store;
+```
+
+and in your component:
+
+```javascript
+
+var SampleComponent = React.createClass({
+  /// ...
+  componentDidMount: function() {
+    SampleStore.addChangePathListener(this._onChangePath);
+    SampleStore.addAddTagListener(this._onAddTag);
+    SampleStore.addMobileUpdateListener(this._onMobileUpdate);
+  },
+  componentWillUnmount: function() {
+    SampleStore.removeChangePathListener(this._onChangePath);
+    SampleStore.removeAddTagListener(this._onAddTag);
+    SampleStore.removeMobileUpdateListener(this._onMobileUpdate);
+  },
+  /// ...
+})
+
 ```
