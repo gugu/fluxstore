@@ -26,7 +26,7 @@ var Store = function (_EventEmitter) {
         this.on(ev, cb);
       };
       _this['remove' + capitalize(ev) + 'Listener'] = function (cb) {
-        this.on(ev, cb);
+        this.removeEventListener(ev, cb);
       };
       _this['emit' + capitalize(ev)] = function (arg) {
         this.emit(ev, arg);
