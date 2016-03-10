@@ -7,9 +7,7 @@ class Store extends EventEmitter {
   constructor(dispatcher) {
     super();
     var events = this.getEvents();
-    console.log(events);
     events.forEach((ev) => {
-      console.log('add' + capitalize(ev) + 'Listener');
       this['add' + capitalize(ev) + 'Listener'] = function(cb) {
         this.on(ev, cb);
       }

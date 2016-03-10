@@ -21,9 +21,7 @@ var Store = function (_EventEmitter) {
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Store).call(this));
 
     var events = _this.getEvents();
-    console.log(events);
     events.forEach(function (ev) {
-      console.log('add' + capitalize(ev) + 'Listener');
       _this['add' + capitalize(ev) + 'Listener'] = function (cb) {
         this.on(ev, cb);
       };
