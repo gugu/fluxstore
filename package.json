@@ -1,6 +1,6 @@
 {
   "name": "fluxstore2",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "Store class for facebook flux, generates event methods automatically, more simple dispatch listener",
   "main": "dist/index.js",
   "scripts": {
